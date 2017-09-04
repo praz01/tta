@@ -1,5 +1,12 @@
+out/
 target/
 
 .classpath
 .project
 .settings/
+
+*.log
+logs/
+
+*.iml
+.idea/
