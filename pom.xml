@@ -1,19 +1,54 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.stalbansboardgamesclub</groupId>
-  <artifactId>tta</artifactId>
-  <packaging>pom</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Through the Ages</name>
-  
-  <modules>
-  	<module>bootstrap</module>
-  	<module>client</module>
-  	<module>common</module>
-  	<module>config</module>
-  	<module>server</module>
-  	<module>war</module>
-  	<module>acceptance-tests</module>
-  	<module>performance-tests</module>
-  </modules>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.stalbansboardgamesclub</groupId>
+	<artifactId>tta</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Through the Ages</name>
+
+	<modules>
+		<module>bootstrap</module>
+		<module>client</module>
+		<module>common</module>
+		<module>config</module>
+		<module>server</module>
+		<module>war</module>
+		<module>acceptance-tests</module>
+		<module>performance-tests</module>
+	</modules>
+	
+	<properties>
+		<logback.version>1.1.2</logback.version>
+	</properties>
+	
+	<scm>
+		<connection>scm:git:ssh://git@localhost:2222/git-server/repos/tta.git</connection>
+		<developerConnection>scm:git:ssh://git@localhost:2222/git-server/repos/tta.git</developerConnection>
+		<url>ssh://git@localhost:2222/git-server/repos/tta.git</url>
+		<tag>HEAD</tag>
+	</scm>
+	
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Releases</name>
+			<url>http://localhost:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Snapshots</name>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
