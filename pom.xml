@@ -11,24 +11,22 @@
 		<module>bootstrap</module>
 		<module>client</module>
 		<module>common</module>
-		<module>config</module>
 		<module>server</module>
 		<module>war</module>
-		<module>acceptance-tests</module>
-		<module>performance-tests</module>
 	</modules>
-	
+
 	<properties>
+		<dropwizard.version>1.1.4</dropwizard.version>
 		<logback.version>1.1.2</logback.version>
 	</properties>
-	
+
 	<scm>
 		<connection>scm:git:ssh://git@localhost:2222/git-server/repos/tta.git</connection>
 		<developerConnection>scm:git:ssh://git@localhost:2222/git-server/repos/tta.git</developerConnection>
 		<url>ssh://git@localhost:2222/git-server/repos/tta.git</url>
 		<tag>HEAD</tag>
 	</scm>
-	
+
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
@@ -44,6 +42,21 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>io.dropwizard</groupId>
+				<artifactId>dropwizard-core</artifactId>
+				<version>${dropwizard.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.dropwizard</groupId>
+				<artifactId>dropwizard-assets</artifactId>
+				<version>${dropwizard.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.dropwizard</groupId>
+				<artifactId>dropwizard-views</artifactId>
+				<version>${dropwizard.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
