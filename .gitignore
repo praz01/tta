@@ -10,3 +10,25 @@ logs/
 
 *.iml
 .idea/
+
+# ember compiled output
+/server/src/main/ember-quickstart/dist
+/server/src/main/ember-quickstart/tmp
+
+# ember dependencies
+/server/src/main/ember-quickstart/node_modules
+/server/src/main/ember-quickstart/bower_components
+
+# ember misc
+/server/src/main/ember-quickstart/.sass-cache
+/server/src/main/ember-quickstart/connect.lock
+/server/src/main/ember-quickstart/coverage/*
+/server/src/main/ember-quickstart/libpeerconnection.log
+npm-debug.log*
+yarn-error.log
+testem.log
+
+# ember-try
+.node_modules.ember-try/
+bower.json.ember-try
+package.json.ember-try
