@@ -1,0 +1,22 @@
+server:
+  rootPath: /*
+  applicationConnectors:
+    - type: http
+      port: 51000
+  adminConnectors:
+    - type: http
+      port: 51010
+      
+logging:
+  level: INFO
+  loggers:
+    com.stalbansboardgamesclub.tta: DEBUG
+    com.netflix.config: DEBUG
+  appenders:
+    - type: console
+    - type: file
+      currentLogFilename: logs/tta.log
+      archive: true
+      archivedLogFilenamePattern: logs/tta-%d.log.gz
+      archivedFileCount: 5
+      logFormat: "%-5p [%d{ISO8601, GMT-00:00}] [correlationId: %X{requestId}] %c: %m%n%rEx"

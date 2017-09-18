@@ -1,0 +1,1 @@
+server: java -jar server/target/tta-server.jar server tta.yml
