@@ -17,9 +17,18 @@
 
 	<properties>
 		<dropwizard.version>1.1.4</dropwizard.version>
-		<logback.version>1.1.2</logback.version>
+		<logback.version>1.2.3</logback.version>
+		
+		<!-- maven plugins -->
 		<maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
 		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+		<maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
+		<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
+		<maven-failsafe-plugin.version>2.20.1</maven-failsafe-plugin.version>
+		<sonar-maven-plugin.version>5.1</sonar-maven-plugin.version>
+		<sonar-jacoco-listeners.version>4.13.0.11627</sonar-jacoco-listeners.version>
+		<jacoco.version>0.7.9</jacoco.version>
 	</properties>
 
 	<scm>
@@ -66,4 +75,161 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${maven-enforcer-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>enforcer-dependencies</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<dependencyConvergence />
+								<banTransitiveDependencies>
+									<excludes>
+										<exclude>io.ropwizard:*</exclude>
+										<exclude>org.hibernate:*</exclude>
+										<exclude>junit:*</exclude>
+										<exclude>org.easytesting:*</exclude>
+									</excludes>
+								</banTransitiveDependencies>
+								<requireReleaseDeps>
+									<message>No Snapshots Allowed!</message>
+									<onlyWhenRelease>true</onlyWhenRelease>
+									<excludes>
+										<exclude>${project.groupId}:*</exclude>
+									</excludes>
+								</requireReleaseDeps>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven-failsafe-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>${sonar-maven-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>acceptance</id>
+			<modules>
+				<module>acceptance-tests</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>performance</id>
+			<modules>
+				<module>performance-tests</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>coverage</id>
+			<dependencies>
+				<dependency>
+					<!-- The Sonar Jacoco Listener for JUnit to extract coverage details per test -->
+					<groupId>org.codehaus.sonar-plugins.java</groupId>
+					<artifactId>sonar-jacoco-listeners</artifactId>
+					<version>${sonar-jacoco-listeners.version}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${maven-surefire-plugin.version}</version>
+						<configuration>
+							<argLine>${jacoco.agent.ut.arg}</argLine>
+							<properties>
+								<property>
+									<name>listener</name>
+									<value>org.sonar.java.jacoco.JUnitListener</value>
+								</property>
+							</properties>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>${maven-failsafe-plugin.version}</version>
+						<configuration>
+							<argLine>${jacoco.agent.it.arg} -Xmx1024m -XX:MaxPermSize=256m</argLine>
+							<properties>
+								<property>
+									<name>listener</name>
+									<value>org.sonar.java.jacoco.JUnitListener</value>
+								</property>
+							</properties>
+							<reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>${jacoco.version}</version>
+						<executions>
+							<execution>
+								<id>prepare-ut-agent</id>
+								<phase>process-test-classes</phase>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+								<configuration>
+									<destFile>${sonar.jcoco.reportPath}</destFile>
+									<propertyName>jacoco.agent.ut.arg</propertyName>
+									<append>true</append>
+								</configuration>
+							</execution>
+							<execution>
+								<id>prepare-it-agent</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+								<configuration>
+									<destFile>${sonar.jacoco.itReportPath}</destFile>
+									<propertyName>jacoco.agent.it.arg</propertyName>
+									<append>true</append>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
