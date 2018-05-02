@@ -11,6 +11,11 @@ logs/
 *.iml
 .idea/
 
+.metadata
+RemoteSystemsTempFiles/
+
+.directory
+
 # ember compiled output
 /server/src/main/ember-quickstart/dist
 /server/src/main/ember-quickstart/tmp
