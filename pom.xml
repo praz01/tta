@@ -52,7 +52,7 @@
 		<maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
 		<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
 		<maven-failsafe-plugin.version>2.20.1</maven-failsafe-plugin.version>
-		<sonar-maven-plugin.version>5.1</sonar-maven-plugin.version>
+		<sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
 		<sonar-jacoco-listeners.version>4.13.0.11627</sonar-jacoco-listeners.version>
 		<jacoco.version>0.7.9</jacoco.version>
 	</properties>
