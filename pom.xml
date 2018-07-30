@@ -58,9 +58,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:git:ssh://git@localhost:2222/git-server/repos/tta.git</connection>
-		<developerConnection>scm:git:ssh://git@localhost:2222/git-server/repos/tta.git</developerConnection>
-		<url>ssh://git@localhost:2222/git-server/repos/tta.git</url>
+		<connection>scm:git:ssh://git@github.com:praz01/tta.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:praz01/tta.git</developerConnection>
+		<url>ssh://git@github.com:praz01/tta.git</url>
 		<tag>HEAD</tag>
 	</scm>
 
