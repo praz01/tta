@@ -4,6 +4,11 @@ node {
     stage ('Build') {
         def jobName = env.JOB_NAME
 
-        sh 'mvn clean install'
+        withEnv([
+                "JAVA_HOME=${tool 'jdk1.8.0_192'}",
+                "PATH+MAVEN=${tool 'Maven 3.5.3'}/bin"
+        ]) {
+            sh 'mvn clean install'
+        }
     }
 }
