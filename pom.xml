@@ -55,6 +55,7 @@
 		<sonar-maven-plugin.version>3.4.0.905</sonar-maven-plugin.version>
 		<sonar-jacoco-listeners.version>4.13.0.11627</sonar-jacoco-listeners.version>
 		<jacoco.version>0.7.9</jacoco.version>
+		<dependency-check-maven.version>3.3.4</dependency-check-maven.version>
 	</properties>
 
 	<scm>
@@ -574,6 +575,21 @@
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>${sonar-maven-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>${dependency-check-maven.version}</version>
+				<configuration>
+					<failBuildOnCVSS>8</failBuildOnCVSS>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
